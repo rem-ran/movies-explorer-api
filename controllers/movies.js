@@ -1,6 +1,5 @@
-const router = require('express').Router();
-
-module.exports = router;
+const mongoose = require('mongoose');
+const Movie = require('../models/user');
 
 // # возвращает все сохранённые текущим  пользователем фильмы
 // GET /movies
