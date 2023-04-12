@@ -1,6 +1,8 @@
 //импорты
 const mongoose = require("mongoose");
-const Movie = require("../models/user");
+const Movie = require("../models/movie");
+
+const { CODE_201 } = require("../config");
 
 const NotFoundError = require("../errors/NotFoundError");
 const NoRightsError = require("../errors/NoRightsError");
@@ -12,7 +14,7 @@ const ValidationError = require("../errors/ValidationError");
 module.exports.getUserSavedMovies = (req, res, next) => {
   Movie.find({})
 
-    .populate(["owner"])
+    // .populate(["owner"])
 
     .then((movies) => res.send(movies))
 
@@ -31,11 +33,11 @@ module.exports.addMovie = (req, res, next) => {
     year,
     description,
     image,
-    trailer,
     nameRU,
     nameEN,
     thumbnail,
     movieId,
+    trailerLink,
   } = req.body;
 
   const owner = req.user._id;
@@ -48,15 +50,15 @@ module.exports.addMovie = (req, res, next) => {
     year,
     description,
     image,
-    trailer,
     nameRU,
     nameEN,
     thumbnail,
     movieId,
+    trailerLink,
     owner,
   })
 
-    .then((movie) => movie.populate("owner"))
+    // .then((movie) => movie.populate("owner"))
 
     .then((movie) => res.status(CODE_201).send(movie))
 
@@ -79,9 +81,9 @@ module.exports.deleteSavedMovie = (req, res, next) => {
   const { _id } = req.user;
 
   //ищем фильм по id
-  Card.findById(movieId)
+  Movie.findById(movieId)
 
-    .populate(["owner"])
+    // .populate(["owner"])
 
     .then((movie) => {
       //проверяем найден ли фильм по указанному id
@@ -95,7 +97,7 @@ module.exports.deleteSavedMovie = (req, res, next) => {
       }
 
       //если условия выше соблюдены, удаляем фильм
-      return Movie.deleteOne(movieId);
+      return Movie.deleteOne({ _id: movieId });
     })
 
     .then(() => res.send({ message: "Фильм удален." }))

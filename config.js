@@ -15,6 +15,9 @@ const ERROR_CODE_404 = 404;
 const ERROR_CODE_409 = 409;
 const ERROR_CODE_500 = 500;
 
+// Статус сохранения на сервере
+const CODE_201 = 201;
+
 module.exports = {
   ERROR_CODE_400,
   ERROR_CODE_401,
@@ -24,5 +27,6 @@ module.exports = {
   ERROR_CODE_500,
   DB_ADDRESS,
   regexUrl,
+  CODE_201,
   PORT,
 };
