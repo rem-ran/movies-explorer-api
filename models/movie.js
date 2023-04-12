@@ -1,6 +1,6 @@
 //импорты
-const mongoose = require('mongoose');
-const { regexUrl } = require('../config');
+const mongoose = require("mongoose");
+const { regexUrl } = require("../config");
 
 //////////////////////////////////////////////////////////////////////////////////////
 
@@ -33,7 +33,7 @@ const movieSchema = new mongoose.Schema({
       validator: function (v) {
         return regexUrl.test(v);
       },
-      message: 'Введите корректную ссылку',
+      message: "Введите корректную ссылку",
     },
   },
   trailerLink: {
@@ -43,7 +43,7 @@ const movieSchema = new mongoose.Schema({
       validator: function (v) {
         return regexUrl.test(v);
       },
-      message: 'Введите корректную ссылку',
+      message: "Введите корректную ссылку",
     },
   },
   thumbnail: {
@@ -53,16 +53,16 @@ const movieSchema = new mongoose.Schema({
       validator: function (v) {
         return regexUrl.test(v);
       },
-      message: 'Введите корректную ссылку',
+      message: "Введите корректную ссылку",
     },
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: 'user',
+    ref: "user",
   },
   movieId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     required: true,
   },
   nameRU: {
@@ -78,7 +78,7 @@ const movieSchema = new mongoose.Schema({
 //////////////////////////////////////////////////////////////////////////////////////
 
 //экспорт
-module.exports = mongoose.model('movie', movieSchema);
+module.exports = mongoose.model("movie", movieSchema);
 
 //// country — страна создания фильма. Обязательное поле-строка.
 //// director — режиссёр фильма. Обязательное поле-строка.
