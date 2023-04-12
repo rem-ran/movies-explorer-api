@@ -1,6 +1,10 @@
+//импорты
 const mongoose = require('mongoose');
 const isEmail = require('validator/lib/isEmail');
 
+//////////////////////////////////////////////////////////////////////////////////////
+
+//схема пользователя
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -23,6 +27,8 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+//////////////////////////////////////////////////////////////////////////////////////
+
 //проверка совпадения полей email и password при авторизации пользователя
 userSchema.statics.findUserByCredentials = function (email, password) {
   return this.findOne({ email })
@@ -42,4 +48,7 @@ userSchema.statics.findUserByCredentials = function (email, password) {
     });
 };
 
+//////////////////////////////////////////////////////////////////////////////////////
+
+//экспорт
 module.exports = mongoose.model('user', userSchema);

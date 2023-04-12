@@ -1,9 +1,9 @@
+//импорты
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const User = require('../models/user');
 
-//импорт собственных ошибок
 const SameEntryError = require('../errors/SameEntryError');
 const ValidationError = require('../errors/ValidationError');
 
