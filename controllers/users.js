@@ -46,8 +46,10 @@ module.exports.login = (req, res, next) => {
   const { NODE_ENV, JWT_SECRET } = process.env;
 
   return (
+    //ищём пользователя по полям email и password
     User.findUserByCredentials(email, password)
 
+      //создаём токен
       .then((user) => {
         const token = jwt.sign(
           { _id: user._id },
@@ -55,6 +57,7 @@ module.exports.login = (req, res, next) => {
           { expiresIn: '7d' }
         );
 
+        //кладём токен в куки
         res
           .cookie('jwt', token, {
             maxAge: 3600000,
