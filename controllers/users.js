@@ -3,6 +3,12 @@ const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const User = require('../models/user');
 
+//импорт собственных ошибок
+const SameEntryError = require('../errors/SameEntryError');
+const ValidationError = require('../errors/ValidationError');
+
+//////////////////////////////////////////////////////////////////////////////////////
+
 //контроллер создания нового пользователя
 module.exports.createUser = (req, res, next) => {
   const { name, email, password } = req.body;
@@ -30,6 +36,8 @@ module.exports.createUser = (req, res, next) => {
       return next(err);
     });
 };
+
+//////////////////////////////////////////////////////////////////////////////////////
 
 //контроллер логина пользователя
 module.exports.login = (req, res, next) => {
@@ -66,6 +74,8 @@ module.exports.login = (req, res, next) => {
   );
 };
 
+//////////////////////////////////////////////////////////////////////////////////////
+
 //контроллер получания пользователя
 module.exports.getUser = (req, res, next) => {
   const { _id } = req.user;
@@ -76,6 +86,8 @@ module.exports.getUser = (req, res, next) => {
     //передаём ошибки дальше в общий обработчик
     .catch(next);
 };
+
+//////////////////////////////////////////////////////////////////////////////////////
 
 //контроллер обновления данных пользователя
 module.exports.updateUser = (req, res, next) => {
