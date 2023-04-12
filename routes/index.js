@@ -3,6 +3,7 @@ const router = require('express').Router();
 const { celebrate, Joi, errors } = require('celebrate');
 const userRouter = require('./users');
 //const movieRouter = require('./movies');
+const auth = require('../middlewares/auth');
 const { login, createUser } = require('../controllers/users');
 const NotFoundError = require('../errors/NotFoundError');
 
@@ -36,6 +37,11 @@ router.post(
   }),
   createUser
 );
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+//рутер авторизации для защиты последующих рутов
+router.use(auth);
 
 //////////////////////////////////////////////////////////////////////////////////////
 

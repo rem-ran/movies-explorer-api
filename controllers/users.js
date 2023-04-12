@@ -81,13 +81,14 @@ module.exports.login = (req, res, next) => {
 
 //контроллер получания пользователя
 module.exports.getUser = (req, res, next) => {
-  const { _id } = req.user;
+  //   const { _id } = req.user;
+  console.log(req);
 
   //находим пользователя по его id в базе данных и возвращаем его
-  User.findById(_id)
-    .then((user) => res.send(user))
-    //передаём ошибки дальше в общий обработчик
-    .catch(next);
+  //   User.findById(_id)
+  //     .then((user) => res.send(user))
+  //     //передаём ошибки дальше в общий обработчик
+  //     .catch(next);
 };
 
 //////////////////////////////////////////////////////////////////////////////////////
