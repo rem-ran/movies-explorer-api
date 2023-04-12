@@ -5,10 +5,13 @@ const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const routes = require('./routes/index');
 const { DB_ADDRESS, PORT } = require('./config');
+const { errorHandler } = require('./middlewares/errorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
+//подключаем эксперсс
 const app = express();
 
+//выставляем разрешённые адреса для подключения к нашему приложению
 app.use(
   cors({
     origin: ['http://localhost:3000'],
@@ -17,8 +20,10 @@ app.use(
   })
 );
 
+//подключаем обработчик куки
 app.use(cookieParser());
 
+//парсим входящие json в req.body
 app.use(express.json());
 
 //подклчюение к базе mongoDB
@@ -35,4 +40,8 @@ app.use(routes);
 //подключаем логгер ошибок
 app.use(errorLogger);
 
+//подключаем централизованный обработчик ошибок
+app.use(errorHandler);
+
+//выставляем порт
 app.listen(PORT);
