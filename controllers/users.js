@@ -10,7 +10,7 @@ const ValidationError = require('../errors/ValidationError');
 //////////////////////////////////////////////////////////////////////////////////////
 
 //контроллер создания нового пользователя
-module.exports.createUser = (req, res, next) => {
+module.exports.userRegister = (req, res, next) => {
   const { name, email, password } = req.body;
 
   bcrypt
@@ -40,7 +40,7 @@ module.exports.createUser = (req, res, next) => {
 //////////////////////////////////////////////////////////////////////////////////////
 
 //контроллер логина пользователя
-module.exports.login = (req, res, next) => {
+module.exports.userLogin = (req, res, next) => {
   const { email, password } = req.body;
 
   const { NODE_ENV, JWT_SECRET } = process.env;
@@ -79,16 +79,51 @@ module.exports.login = (req, res, next) => {
 
 //////////////////////////////////////////////////////////////////////////////////////
 
+//котроллер выхода пользователя
+module.exports.userSignout = (req, res, next) => {
+  const { _id } = req.user;
+
+  const { NODE_ENV, JWT_SECRET } = process.env;
+
+  return (
+    //ищём пользователя по id
+    User.findById(_id)
+
+      //создаём токен на 1 мс
+      .then((user) => {
+        const token = jwt.sign(
+          { _id: user._id },
+          NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+          { expiresIn: '1' }
+        );
+
+        //кладём токен на 1 мс в куки
+        res
+          .cookie('jwt', token, {
+            maxAge: 1,
+            httpOnly: true,
+            sameSite: true,
+          })
+
+          .send({ mesage: 'logout ok' });
+      })
+
+      //передаём ошибки дальше в общий обработчик
+      .catch(next)
+  );
+};
+
+//////////////////////////////////////////////////////////////////////////////////////
+
 //контроллер получания пользователя
 module.exports.getUser = (req, res, next) => {
-  //   const { _id } = req.user;
-  console.log(req);
+  const { _id } = req.user;
 
   //находим пользователя по его id в базе данных и возвращаем его
-  //   User.findById(_id)
-  //     .then((user) => res.send(user))
-  //     //передаём ошибки дальше в общий обработчик
-  //     .catch(next);
+  User.findById(_id)
+    .then((user) => res.send(user))
+    //передаём ошибки дальше в общий обработчик
+    .catch(next);
 };
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -124,17 +159,3 @@ module.exports.updateUser = (req, res, next) => {
       return next(err);
     });
 };
-
-// # возвращает информацию о пользователе (email и имя)
-// GET /users/me
-
-// # обновляет информацию о пользователе (email и имя)
-// PATCH /users/me
-
-// # создаёт пользователя с переданными в теле
-// # email, password и name
-// POST /signup
-
-// # проверяет переданные в теле почту и пароль
-// # и возвращает JWT
-// POST /signin

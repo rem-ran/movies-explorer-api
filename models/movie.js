@@ -1,6 +1,10 @@
+//импорты
 const mongoose = require('mongoose');
 const { regexUrl } = require('../config');
 
+//////////////////////////////////////////////////////////////////////////////////////
+
+//схема фильма
 const movieSchema = new mongoose.Schema({
   country: {
     type: String,
@@ -71,6 +75,9 @@ const movieSchema = new mongoose.Schema({
   },
 });
 
+//////////////////////////////////////////////////////////////////////////////////////
+
+//экспорт
 module.exports = mongoose.model('movie', movieSchema);
 
 //// country — страна создания фильма. Обязательное поле-строка.

@@ -2,9 +2,15 @@
 const router = require('express').Router();
 const { celebrate, Joi, errors } = require('celebrate');
 const userRouter = require('./users');
-//const movieRouter = require('./movies');
+const movieRouter = require('./movies');
 const auth = require('../middlewares/auth');
-const { login, createUser } = require('../controllers/users');
+
+const {
+  userLogin,
+  userRegister,
+  userSignout,
+} = require('../controllers/users');
+
 const NotFoundError = require('../errors/NotFoundError');
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -19,7 +25,7 @@ router.post(
       password: Joi.string().required(),
     }),
   }),
-  login
+  userLogin
 );
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -35,7 +41,7 @@ router.post(
       password: Joi.string().required(),
     }),
   }),
-  createUser
+  userRegister
 );
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -47,6 +53,18 @@ router.use(auth);
 
 //подключаем рутер пользователя
 router.use('/users', userRouter);
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+//подключаем рутер фильмов
+router.use('/movies', movieRouter);
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+//подключаем рутер выхода пользователя и удаления токена из куки
+router.use('/signout', userSignout);
+
+//////////////////////////////////////////////////////////////////////////////////////
 
 //подлючаем обработчик несуществующего рута
 router.use((req, res, next) => {

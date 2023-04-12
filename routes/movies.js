@@ -1,13 +1,28 @@
+//импорты
 const router = require('express').Router();
 
+const {
+  getUserSavedMovies,
+  addMovie,
+  deleteSavedMovie,
+} = require('../controllers/movies');
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+//рутер получения всех сохранённых текущим пользователем фильмов
+router.get('/', getUserSavedMovies);
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+//рутер создания нового фильма
+router.post('/', addMovie);
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+//рутер удаления сохранённого пользователем фильма
+router.delete('/:movieId', deleteSavedMovie);
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+//экспорт
 module.exports = router;
-
-// # возвращает все сохранённые текущим  пользователем фильмы
-// GET /movies
-
-// # создаёт фильм с переданными в теле
-// # country, director, duration, year, description, image, trailer, nameRU, nameEN и thumbnail, movieId
-// POST /movies
-
-// # удаляет сохранённый фильм по id
-// DELETE /movies/_id
