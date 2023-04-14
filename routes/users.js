@@ -1,6 +1,6 @@
 //импорты
 const router = require("express").Router();
-const { userPatchValidation } = require("../middlewares/inputValidators");
+const { userPatchValidation } = require("../middlewares/userInputValidators");
 
 const { getUser, updateUser } = require("../controllers/users");
 

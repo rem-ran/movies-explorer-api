@@ -1,13 +1,13 @@
 //импорты
 const router = require("express").Router();
-const { errors } = require("celebrate");
 const userRouter = require("./users");
 const movieRouter = require("./movies");
 const auth = require("../middlewares/auth");
+
 const {
   signupValidation,
   signinValidation,
-} = require("../middlewares/inputValidators");
+} = require("../middlewares/userInputValidators");
 
 const {
   userLogin,
@@ -65,9 +65,6 @@ router.use("/signout", userSignout);
 router.use((req, res, next) => {
   next(new NotFoundError("Запрошен несуществующий роут."));
 });
-
-//подключаем обработчик ошибок celebrate
-router.use(errors());
 
 //////////////////////////////////////////////////////////////////////////////////////
 

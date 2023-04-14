@@ -5,9 +5,23 @@ const { celebrate, Joi } = require("celebrate");
 
 //объект с ключами для валидации инпутов пользователя
 const userValKeys = {
-  password: Joi.string().required(),
-  email: Joi.string().required().email(),
-  name: Joi.string().required().min(2).max(30),
+  password: Joi.string().required().messages({
+    "string.base": `Поле {#label} должно быть строкой`,
+    "string.empty": `Поле {#label} не может быть пустым`,
+    "any.required": `Поле {#label} обязательно для заполнения`,
+  }),
+  email: Joi.string().required().email().messages({
+    "string.email": "Поле {#label} должно быть валидным имеил адресом",
+    "string.empty": `Поле {#label} не может быть пустым`,
+    "any.required": `Поле {#label} обязательно для заполнения`,
+  }),
+  name: Joi.string().required().min(2).max(30).messages({
+    "string.base": `Поле {#label} должно быть строкой`,
+    "string.empty": `Поле {#label} не может быть пустым`,
+    "string.min": `Поле {#label} должго быть минимум {#limit} символов`,
+    "string.max": `Поле {#label} должго быть максимум {#limit} символов`,
+    "any.required": `Поле {#label} обязательно для заполнения`,
+  }),
 };
 
 //////////////////////////////////////////////////////////////////////////////////////
