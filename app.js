@@ -1,6 +1,7 @@
 //импорты
 require("dotenv").config();
 const express = require("express");
+const helmet = require("helmet");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const { rateLimiter } = require("./middlewares/rateLimit");
@@ -14,6 +15,8 @@ const { requestLogger, errorLogger } = require("./middlewares/logger");
 
 //подключаем эксперсс
 const app = express();
+
+app.use(helmet());
 
 //выставляем разрешённые адреса для подключения к нашему приложению
 app.use(
