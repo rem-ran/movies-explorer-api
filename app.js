@@ -22,7 +22,7 @@ app.use(helmet());
 // выставляем разрешённые адреса для подключения к нашему приложению
 app.use(
   cors({
-    origin: ['http://localhost:3000'],
+    origin: ['https://remran.nomoredomains.monster'],
     credentials: true,
     maxAge: 300,
   }),

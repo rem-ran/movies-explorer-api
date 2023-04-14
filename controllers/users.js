@@ -105,7 +105,7 @@ module.exports.userSignout = (req, res, next) => {
             sameSite: true,
           })
 
-          .send({ mesage: 'logout ok' });
+          .send({ message: 'Вы успешно вышли' });
       })
 
       // передаём ошибки дальше в общий обработчик
