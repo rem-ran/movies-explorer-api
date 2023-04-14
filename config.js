@@ -1,13 +1,12 @@
 const { PORT = 3000 } = process.env;
 
-//Адрес базы данных
-const { DB_ADDRESS = "mongodb://127.0.0.1:27017/bitfilmsDB" } = process.env;
+// Адрес базы данных
+const { DB_ADDRESS = 'mongodb://127.0.0.1:27017/bitfilmsDB' } = process.env;
 
-//проверка валидности url
-const regexUrl =
-  /https?:\/\/(www\.)?[-a-zA-Z0-9.]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#'?&//=]*)/;
+// проверка валидности url
+const regexUrl = /https?:\/\/(www\.)?[-a-zA-Z0-9.]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#'?&//=]*)/;
 
-//Статусы ошибок
+// Статусы ошибок
 const ERROR_CODE_400 = 400;
 const ERROR_CODE_401 = 401;
 const ERROR_CODE_403 = 403;
