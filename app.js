@@ -16,6 +16,7 @@ const { requestLogger, errorLogger } = require("./middlewares/logger");
 //подключаем эксперсс
 const app = express();
 
+//подклчючаем защиту helmet
 app.use(helmet());
 
 //выставляем разрешённые адреса для подключения к нашему приложению
@@ -33,6 +34,7 @@ app.use(cookieParser());
 //парсим входящие json в req.body
 app.use(express.json());
 
+//подключаем ограничитель запросов
 app.use(rateLimiter);
 
 //подклчюение к базе mongoDB

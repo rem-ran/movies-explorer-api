@@ -1,26 +1,21 @@
 //импорты
-const router = require('express').Router();
-const { celebrate, Joi } = require('celebrate');
+const router = require("express").Router();
+const { userPatchValidation } = require("../middlewares/inputValidators");
 
-const { getUser, updateUser } = require('../controllers/users');
+const { getUser, updateUser } = require("../controllers/users");
 
 //////////////////////////////////////////////////////////////////////////////////////
 
 //рутер получения своего пользователя
-router.get('/me', getUser);
+router.get("/me", getUser);
 
 //////////////////////////////////////////////////////////////////////////////////////
 
 //рутер обновления данных своего пользователя
 router.patch(
-  '/me',
+  "/me",
   //валидируем поля на этапе ввода
-  celebrate({
-    body: Joi.object().keys({
-      name: Joi.string().required().min(2).max(30),
-      email: Joi.string().required().email(),
-    }),
-  }),
+  userPatchValidation(),
   updateUser
 );
 
