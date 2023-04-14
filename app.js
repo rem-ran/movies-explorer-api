@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const { rateLimiter } = require("./middlewares/rateLimit");
 const mongoose = require("mongoose");
 const routes = require("./routes/index");
 const { DB_ADDRESS, PORT } = require("./config");
@@ -28,6 +29,8 @@ app.use(cookieParser());
 
 //парсим входящие json в req.body
 app.use(express.json());
+
+app.use(rateLimiter);
 
 //подклчюение к базе mongoDB
 mongoose.connect(DB_ADDRESS, {
