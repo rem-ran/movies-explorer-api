@@ -1,11 +1,11 @@
 //импорты
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const mongoose = require('mongoose');
-const User = require('../models/user');
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
+const User = require("../models/user");
 
-const SameEntryError = require('../errors/SameEntryError');
-const ValidationError = require('../errors/ValidationError');
+const SameEntryError = require("../errors/SameEntryError");
+const ValidationError = require("../errors/ValidationError");
 
 //////////////////////////////////////////////////////////////////////////////////////
 
@@ -29,7 +29,7 @@ module.exports.userRegister = (req, res, next) => {
       //проверяем на ошибку базы данных, если такой пользователь в ней уже существует
       if (err.code === 11000) {
         return next(
-          new SameEntryError('Пользователь с таким email уже существует')
+          new SameEntryError("Пользователь с таким email уже существует")
         );
       }
       //передаём ошибки дальше в общий обработчик
@@ -53,13 +53,13 @@ module.exports.userLogin = (req, res, next) => {
       .then((user) => {
         const token = jwt.sign(
           { _id: user._id },
-          NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
-          { expiresIn: '7d' }
+          NODE_ENV === "production" ? JWT_SECRET : "dev-secret",
+          { expiresIn: "7d" }
         );
 
         //кладём токен в куки
         res
-          .cookie('jwt', token, {
+          .cookie("jwt", token, {
             maxAge: 3600000,
             httpOnly: true,
             sameSite: true,
@@ -93,19 +93,19 @@ module.exports.userSignout = (req, res, next) => {
       .then((user) => {
         const token = jwt.sign(
           { _id: user._id },
-          NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
-          { expiresIn: '1' }
+          NODE_ENV === "production" ? JWT_SECRET : "dev-secret",
+          { expiresIn: "1" }
         );
 
         //кладём токен на 1 мс в куки
         res
-          .cookie('jwt', token, {
+          .cookie("jwt", token, {
             maxAge: 1,
             httpOnly: true,
             sameSite: true,
           })
 
-          .send({ mesage: 'logout ok' });
+          .send({ mesage: "logout ok" });
       })
 
       //передаём ошибки дальше в общий обработчик

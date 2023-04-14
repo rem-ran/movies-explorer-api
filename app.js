@@ -1,13 +1,13 @@
 //импорты
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const cookieParser = require('cookie-parser');
-const mongoose = require('mongoose');
-const routes = require('./routes/index');
-const { DB_ADDRESS, PORT } = require('./config');
-const { errorHandler } = require('./middlewares/errorHandler');
-const { requestLogger, errorLogger } = require('./middlewares/logger');
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const mongoose = require("mongoose");
+const routes = require("./routes/index");
+const { DB_ADDRESS, PORT } = require("./config");
+const { errorHandler } = require("./middlewares/errorHandler");
+const { requestLogger, errorLogger } = require("./middlewares/logger");
 
 //////////////////////////////////////////////////////////////////////////////////////
 
@@ -17,7 +17,7 @@ const app = express();
 //выставляем разрешённые адреса для подключения к нашему приложению
 app.use(
   cors({
-    origin: ['http://localhost:3000'],
+    origin: ["http://localhost:3000"],
     credentials: true,
     maxAge: 300,
   })

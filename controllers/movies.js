@@ -14,8 +14,6 @@ const ValidationError = require("../errors/ValidationError");
 module.exports.getUserSavedMovies = (req, res, next) => {
   Movie.find({})
 
-    // .populate(["owner"])
-
     .then((movies) => res.send(movies))
 
     //передаём ошибки дальше в общий обработчик
@@ -58,8 +56,6 @@ module.exports.addMovie = (req, res, next) => {
     owner,
   })
 
-    // .then((movie) => movie.populate("owner"))
-
     .then((movie) => res.status(CODE_201).send(movie))
 
     .catch((err) => {
@@ -82,8 +78,6 @@ module.exports.deleteSavedMovie = (req, res, next) => {
 
   //ищем фильм по id
   Movie.findById(movieId)
-
-    // .populate(["owner"])
 
     .then((movie) => {
       //проверяем найден ли фильм по указанному id
@@ -112,13 +106,3 @@ module.exports.deleteSavedMovie = (req, res, next) => {
       return next(err);
     });
 };
-
-// # возвращает все сохранённые текущим  пользователем фильмы
-// GET /movies
-
-// # создаёт фильм с переданными в теле
-// # country, director, duration, year, description, image, trailer, nameRU, nameEN и thumbnail, movieId
-// POST /movies
-
-// # удаляет сохранённый фильм по id
-// DELETE /movies/_id
