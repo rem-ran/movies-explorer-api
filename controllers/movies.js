@@ -18,7 +18,8 @@ const ValidationError = require('../errors/ValidationError');
 
 // контроллер получения всех сохранённых текущим пользователем фильмов
 module.exports.getUserSavedMovies = (req, res, next) => {
-  Movie.find({})
+  const userId = req.user._id;
+  Movie.find({ owner: userId })
 
     .then((movies) => res.send(movies))
 
