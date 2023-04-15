@@ -1,27 +1,36 @@
 // импорты
 const { celebrate, Joi } = require('celebrate');
 
+const {
+  joiInvalidEmailMsg,
+  joiToBeStringMsg,
+  joiRequiredFieldMsg,
+  joiCantBeEmptyMsg,
+  joiMaxLengthMsg,
+  joiMinLengthMsg,
+} = require('../config');
+
 /// ///////////////////////////////////////////////////////////////////////////////////
 
 // объект с ключами для валидации инпутов пользователя
 const userValKeys = {
   password: Joi.string().required().messages({
-    'string.base': 'Поле {#label} должно быть строкой',
-    'string.empty': 'Поле {#label} не может быть пустым',
-    'any.required': 'Поле {#label} обязательно для заполнения',
+    'string.base': joiToBeStringMsg,
+    'string.empty': joiCantBeEmptyMsg,
+    'any.required': joiRequiredFieldMsg,
   }),
   email: Joi.string().required().email().messages({
-    'string.email': 'Поле {#label} должно быть валидным имеил адресом',
-    'string.empty': 'Поле {#label} не может быть пустым',
-    'any.required': 'Поле {#label} обязательно для заполнения',
+    'string.email': joiInvalidEmailMsg,
+    'string.empty': joiCantBeEmptyMsg,
+    'any.required': joiRequiredFieldMsg,
   }),
   name: Joi.string().required().min(2).max(30)
     .messages({
-      'string.base': 'Поле {#label} должно быть строкой',
-      'string.empty': 'Поле {#label} не может быть пустым',
-      'string.min': 'Поле {#label} должго быть минимум {#limit} символов',
-      'string.max': 'Поле {#label} должго быть максимум {#limit} символов',
-      'any.required': 'Поле {#label} обязательно для заполнения',
+      'string.base': joiToBeStringMsg,
+      'string.empty': joiCantBeEmptyMsg,
+      'string.min': joiMinLengthMsg,
+      'string.max': joiMaxLengthMsg,
+      'any.required': joiRequiredFieldMsg,
     }),
 };
 

@@ -1,66 +1,77 @@
 // импорты
 const { celebrate, Joi } = require('celebrate');
 
+const {
+  joiToBeStringMsg,
+  joiRequiredFieldMsg,
+  joiCantBeEmptyMsg,
+  joiToBeNumberMsg,
+  joiInvalidUrlMsg,
+  joiExactLengthMsg,
+  joiToBeHexMsg,
+} = require('../config');
+
 /// ///////////////////////////////////////////////////////////////////////////////////
 
 // объект с ключами для валидации инпутов фильма
 const movieValKeys = {
   country: Joi.string().required().messages({
-    'string.base': 'Поле {#label} должно быть строкой',
-    'string.empty': 'Поле {#label} не может быть пустым',
-    'any.required': 'Поле {#label} обязательно для заполнения',
+    'string.base': joiToBeStringMsg,
+    'string.empty': joiCantBeEmptyMsg,
+    'any.required': joiRequiredFieldMsg,
   }),
   director: Joi.string().required().messages({
-    'string.email': 'Поле {#label} должно быть валидным имеил адресом',
-    'string.empty': 'Поле {#label} не может быть пустым',
-    'any.required': 'Поле {#label} обязательно для заполнения',
+    'string.email': joiToBeStringMsg,
+    'string.empty': joiCantBeEmptyMsg,
+    'any.required': joiRequiredFieldMsg,
   }),
   duration: Joi.number().required().messages({
-    'number.base': 'Поле {#label} должно быть числом',
-    'number.empty': 'Поле {#label} не может быть пустым',
-    'any.required': 'Поле {#label} обязательно для заполнения',
+    'number.base': joiToBeNumberMsg,
+    'number.empty': joiCantBeEmptyMsg,
+    'any.required': joiRequiredFieldMsg,
   }),
   year: Joi.string().required().messages({
-    'string.base': 'Поле {#label} должно быть строкой',
-    'string.empty': 'Поле {#label} не может быть пустым',
-    'any.required': 'Поле {#label} обязательно для заполнения',
+    'string.base': joiToBeStringMsg,
+    'string.empty': joiCantBeEmptyMsg,
+    'any.required': joiRequiredFieldMsg,
   }),
   description: Joi.string().required().messages({
-    'string.base': 'Поле {#label} должно быть строкой',
-    'string.empty': 'Поле {#label} не может быть пустым',
-    'any.required': 'Поле {#label} обязательно для заполнения',
+    'string.base': joiToBeStringMsg,
+    'string.empty': joiCantBeEmptyMsg,
+    'any.required': joiRequiredFieldMsg,
   }),
   image: Joi.string().required().uri().messages({
-    'string.base': 'Поле {#label} должно быть строкой',
-    'string.empty': 'Поле {#label} не может быть пустым',
-    'any.required': 'Поле {#label} обязательно для заполнения',
-    'string.uri': 'Поле {#label} должно быть валидной ссылкой',
+    'string.base': joiToBeStringMsg,
+    'string.empty': joiCantBeEmptyMsg,
+    'any.required': joiRequiredFieldMsg,
+    'string.uri': joiInvalidUrlMsg,
   }),
   trailerLink: Joi.string().required().uri().messages({
-    'string.base': 'Поле {#label} должно быть строкой',
-    'string.empty': 'Поле {#label} не может быть пустым',
-    'any.required': 'Поле {#label} обязательно для заполнения',
-    'string.uri': 'Поле {#label} должно быть валидной ссылкой',
+    'string.base': joiToBeStringMsg,
+    'string.empty': joiCantBeEmptyMsg,
+    'any.required': joiRequiredFieldMsg,
+    'string.uri': joiInvalidUrlMsg,
   }),
   thumbnail: Joi.string().required().uri().messages({
-    'string.base': 'Поле {#label} должно быть строкой',
-    'string.empty': 'Поле {#label} не может быть пустым',
-    'any.required': 'Поле {#label} обязательно для заполнения',
-    'string.uri': 'Поле {#label} должно быть валидной ссылкой',
+    'string.base': joiToBeStringMsg,
+    'string.empty': joiCantBeEmptyMsg,
+    'any.required': joiRequiredFieldMsg,
+    'string.uri': joiInvalidUrlMsg,
   }),
   movieId: Joi.number().required().messages({
-    'number.base': 'Поле {#label} должно быть числом',
-    'any.required': 'Поле {#label} обязательно для заполнения',
+    'number.base': joiToBeNumberMsg,
+    'number.empty': joiCantBeEmptyMsg,
+    'any.required': joiRequiredFieldMsg,
   }),
   nameRU: Joi.string().required().messages({
-    'string.base': 'Поле {#label} должно быть строкой',
-    'string.empty': 'Поле {#label} не может быть пустым',
-    'any.required': 'Поле {#label} обязательно для заполнения',
+    'string.base': joiToBeStringMsg,
+    'string.empty': joiCantBeEmptyMsg,
+    'any.required': joiRequiredFieldMsg,
   }),
   nameEN: Joi.string().required().messages({
-    'string.base': 'Поле {#label} должно быть строкой',
-    'string.empty': 'Поле {#label} не может быть пустым',
-    'any.required': 'Поле {#label} обязательно для заполнения',
+    'string.base': joiToBeStringMsg,
+    'string.empty': joiCantBeEmptyMsg,
+    'any.required': joiRequiredFieldMsg,
   }),
 };
 
@@ -94,10 +105,10 @@ const movieDeleteValidation = () => celebrate({
   params: Joi.object().keys({
     movieId: Joi.string().required().hex().length(24)
       .messages({
-        'string.length': 'Поле {#label} должно быть длиною в 24 символа',
-        'string.empty': 'Поле {#label} не может быть пустым',
-        'any.required': 'Поле {#label} обязательно для заполнения',
-        'string.hex': 'Поле {#label} должно быть шестнадцатеричным',
+        'string.length': joiExactLengthMsg,
+        'string.empty': joiCantBeEmptyMsg,
+        'any.required': joiRequiredFieldMsg,
+        'string.hex': joiToBeHexMsg,
       }),
   }),
 });

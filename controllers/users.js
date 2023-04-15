@@ -7,6 +7,8 @@ const User = require('../models/user');
 const SameEntryError = require('../errors/SameEntryError');
 const ValidationError = require('../errors/ValidationError');
 
+const { sameEmailUserMsg, logoutOkMsg } = require('../config');
+
 /// ///////////////////////////////////////////////////////////////////////////////////
 
 // контроллер создания нового пользователя
@@ -29,7 +31,7 @@ module.exports.userRegister = (req, res, next) => {
       // проверяем на ошибку базы данных, если такой пользователь в ней уже существует
       if (err.code === 11000) {
         return next(
-          new SameEntryError('Пользователь с таким email уже существует'),
+          new SameEntryError(sameEmailUserMsg),
         );
       }
       // передаём ошибки дальше в общий обработчик
@@ -105,7 +107,7 @@ module.exports.userSignout = (req, res, next) => {
             sameSite: true,
           })
 
-          .send({ message: 'Вы успешно вышли' });
+          .send({ message: logoutOkMsg });
       })
 
       // передаём ошибки дальше в общий обработчик

@@ -2,7 +2,13 @@
 const mongoose = require('mongoose');
 const Movie = require('../models/movie');
 
-const { CODE_201 } = require('../config');
+const {
+  CODE_201,
+  notAllowedToDelMovieMsg,
+  notCorrectMovieIdMsg,
+  notFoundMovieMsg,
+  filmDeletedMsg,
+} = require('../config');
 
 const NotFoundError = require('../errors/NotFoundError');
 const NoRightsError = require('../errors/NoRightsError');
@@ -82,24 +88,24 @@ module.exports.deleteSavedMovie = (req, res, next) => {
     .then((movie) => {
       // проверяем найден ли фильм по указанному id
       if (!movie) {
-        throw new NotFoundError('Фильм по указанному _id не найден.');
+        throw new NotFoundError(notFoundMovieMsg);
       }
 
       // проверям кто сохранил фильм
       if (movie.owner.toString() !== _id.toString()) {
-        throw new NoRightsError('Нельзя удалять чужие фильмы.');
+        throw new NoRightsError(notAllowedToDelMovieMsg);
       }
 
       // если условия выше соблюдены, удаляем фильм
       return Movie.deleteOne({ _id: movieId });
     })
 
-    .then(() => res.send({ message: 'Фильм удален.' }))
+    .then(() => res.send({ message: filmDeletedMsg }))
 
     .catch((err) => {
       // проверяем на ошибку валидации
       if (err instanceof mongoose.Error.CastError) {
-        return next(new NotFoundError('Указан некорректный id фильма.'));
+        return next(new NotFoundError(notCorrectMovieIdMsg));
       }
 
       // передаём ошибки дальше в общий обработчик

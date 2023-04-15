@@ -2,6 +2,8 @@
 const mongoose = require('mongoose');
 const { regexUrl } = require('../config');
 
+const { validUrlRequiredMsg } = require('../config');
+
 /// ///////////////////////////////////////////////////////////////////////////////////
 
 // схема фильма
@@ -33,7 +35,7 @@ const movieSchema = new mongoose.Schema({
       validator: function (v) {
         return regexUrl.test(v);
       },
-      message: 'Введите корректную ссылку',
+      message: validUrlRequiredMsg,
     },
   },
   trailerLink: {
@@ -43,7 +45,7 @@ const movieSchema = new mongoose.Schema({
       validator: function (v) {
         return regexUrl.test(v);
       },
-      message: 'Введите корректную ссылку',
+      message: validUrlRequiredMsg,
     },
   },
   thumbnail: {
@@ -53,7 +55,7 @@ const movieSchema = new mongoose.Schema({
       validator: function (v) {
         return regexUrl.test(v);
       },
-      message: 'Введите корректную ссылку',
+      message: validUrlRequiredMsg,
     },
   },
   owner: {

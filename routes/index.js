@@ -17,6 +17,8 @@ const {
 
 const NotFoundError = require('../errors/NotFoundError');
 
+const { invalitRouteMsg } = require('../config');
+
 /// ///////////////////////////////////////////////////////////////////////////////////
 
 // рутер авторизации пользователя
@@ -63,7 +65,7 @@ router.use('/signout', userSignout);
 
 // подлючаем обработчик несуществующего рута
 router.use((req, res, next) => {
-  next(new NotFoundError('Запрошен несуществующий роут.'));
+  next(new NotFoundError(invalitRouteMsg));
 });
 
 /// ///////////////////////////////////////////////////////////////////////////////////

@@ -2,6 +2,8 @@
 const { isCelebrateError } = require('celebrate');
 const { ERROR_CODE_400, ERROR_CODE_500 } = require('../config');
 
+const { serverErrorMsg } = require('../config');
+
 /// ///////////////////////////////////////////////////////////////////////////////////
 
 // централизованный обработчик ошибок
@@ -25,7 +27,7 @@ const errorHandler = (err, req, res, next) => {
   // проверям статус ошибки и отправлеям соответсвующее ему сообщение
   return res.status(statusCode).send({
     message:
-      statusCode === ERROR_CODE_500 ? 'На сервере произошла ошибка.' : message,
+      statusCode === ERROR_CODE_500 ? serverErrorMsg : message,
   });
 };
 
