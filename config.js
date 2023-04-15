@@ -1,7 +1,7 @@
 const { PORT = 3000 } = process.env;
 
 // Адрес базы данных
-const { DB_ADDRESS = 'mongodb://127.0.0.1:27017/bitfilmsDB' } = process.env;
+const { DB_ADDRESS = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process.env;
 
 // проверка валидности url
 const regexUrl = /https?:\/\/(www\.)?[-a-zA-Z0-9.]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#'?&//=]*)/;
