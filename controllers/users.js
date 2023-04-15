@@ -23,17 +23,20 @@ module.exports.userRegister = (req, res, next) => {
     .then(() => {
       res.send(new User({ name, email }));
     })
+
     .catch((err) => {
       // проверяем на ошибку валидации
       if (err instanceof mongoose.Error.ValidationError) {
         return next(new ValidationError(err));
       }
+
       // проверяем на ошибку базы данных, если такой пользователь в ней уже существует
       if (err.code === 11000) {
         return next(
           new SameEntryError(sameEmailUserMsg),
         );
       }
+
       // передаём ошибки дальше в общий обработчик
       return next(err);
     });
@@ -124,6 +127,7 @@ module.exports.getUser = (req, res, next) => {
   // находим пользователя по его id в базе данных и возвращаем его
   User.findById(_id)
     .then((user) => res.send(user))
+
     // передаём ошибки дальше в общий обработчик
     .catch(next);
 };
@@ -155,6 +159,14 @@ module.exports.updateUser = (req, res, next) => {
       if (err instanceof mongoose.Error.ValidationError) {
         return next(new ValidationError(err));
       }
+
+      // проверяем на ошибку базы данных, если такой пользователь в ней уже существует
+      if (err.code === 11000) {
+        return next(
+          new SameEntryError(sameEmailUserMsg),
+        );
+      }
+
       // передаём ошибки дальше в общий обработчик
       return next(err);
     });
