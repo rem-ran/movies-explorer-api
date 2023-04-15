@@ -33,6 +33,7 @@ const userSchema = new mongoose.Schema({
   },
   name: {
     type: String,
+    required: true,
     minlength: [2, invalidNameMinLengthMsg],
     maxlength: [30, invalidNameMaxLengthMsg],
   },
