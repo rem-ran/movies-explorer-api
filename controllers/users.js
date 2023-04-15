@@ -88,34 +88,11 @@ module.exports.userLogin = (req, res, next) => {
 module.exports.userSignout = (req, res, next) => {
   const { _id } = req.user;
 
-  const { NODE_ENV, JWT_SECRET } = process.env;
+  User.findById(_id)
+    .then(() => res.clearCookie('jwt').send({ message: logoutOkMsg }))
 
-  return (
-    // ищём пользователя по id
-    User.findById(_id)
-
-      // создаём токен на 1 мс
-      .then((user) => {
-        const token = jwt.sign(
-          { _id: user._id },
-          NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
-          { expiresIn: '1' },
-        );
-
-        // кладём токен на 1 мс в куки
-        res
-          .cookie('jwt', token, {
-            maxAge: 1,
-            httpOnly: true,
-            sameSite: true,
-          })
-
-          .send({ message: logoutOkMsg });
-      })
-
-      // передаём ошибки дальше в общий обработчик
-      .catch(next)
-  );
+    // передаём ошибки дальше в общий обработчик
+    .catch(next);
 };
 
 /// ///////////////////////////////////////////////////////////////////////////////////
