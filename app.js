@@ -34,6 +34,9 @@ app.use(cookieParser());
 // парсим входящие json в req.body
 app.use(express.json());
 
+// подключаем логгер запросов
+app.use(requestLogger);
+
 // подключаем ограничитель запросов
 app.use(rateLimiter);
 
@@ -41,9 +44,6 @@ app.use(rateLimiter);
 mongoose.connect(DB_ADDRESS, {
   useNewUrlParser: true,
 });
-
-// подключаем логгер запросов
-app.use(requestLogger);
 
 // подключаем руты
 app.use(routes);
