@@ -105,7 +105,7 @@ module.exports.deleteSavedMovie = (req, res, next) => {
     .catch((err) => {
       // проверяем на ошибку валидации
       if (err instanceof mongoose.Error.CastError) {
-        return next(new NotFoundError(notCorrectMovieIdMsg));
+        return next(new ValidationError(notCorrectMovieIdMsg));
       }
 
       // передаём ошибки дальше в общий обработчик
